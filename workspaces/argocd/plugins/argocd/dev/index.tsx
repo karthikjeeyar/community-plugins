@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// eslint-disable-next-line
-import '@backstage/ui/css/styles.css';
 import { Entity } from '@backstage/catalog-model';
 import { ConfigReader } from '@backstage/config';
 import { configApiRef } from '@backstage/core-plugin-api';
@@ -60,6 +58,7 @@ import {
   prodApplication,
 } from './__data__';
 import { mockArgoResources } from './__data__/argoRolloutsObjects';
+import { argocdTranslations } from '../src/translations';
 
 const mockEntity: Entity = {
   apiVersion: 'backstage.io/v1alpha1',
@@ -233,6 +232,10 @@ class MockKubernetesClient implements KubernetesApi {
 
 createDevApp()
   .registerPlugin(argocdPlugin)
+  .addTranslationResource(argocdTranslations)
+  .setAvailableLanguages(['en', 'fr', 'it', 'ja'])
+  .setDefaultLanguage('en')
+
   .addPage({
     element: (
       <TestApiProvider
